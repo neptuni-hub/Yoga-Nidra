@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Yoga Nidra · Teacher Script</title>
+
+<!-- App identity -->
+<meta name="application-name" content="Yoga Nidra">
+<meta name="description" content="A guided 60-minute Yoga Nidra class script for teachers. Phase-by-phase prompts, spoken script, and teaching tips.">
+
+<!-- iOS home screen -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Yoga Nidra">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%230a3d35'/%3E%3Ccircle cx='90' cy='72' r='28' fill='none' stroke='%23c9a84c' stroke-width='5'/%3E%3Cellipse cx='90' cy='72' rx='28' ry='10' fill='none' stroke='%23c9a84c' stroke-width='3' opacity='0.5'/%3E%3Cline x1='90' y1='44' x2='90' y2='100' stroke='%23c9a84c' stroke-width='3' opacity='0.5'/%3E%3Ccircle cx='90' cy='38' r='5' fill='%23c9a84c'/%3E%3Cpath d='M70 108 Q90 122 110 108' stroke='%23c8ede6' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3Ctext x='90' y='150' text-anchor='middle' font-family='Georgia,serif' font-size='18' fill='%23c8ede6' letter-spacing='1'%3ENIDRA%3C/text%3E%3C/svg%3E">
+
+<!-- Android / PWA -->
+<meta name="theme-color" content="#0a3d35">
+<link rel="manifest" href="data:application/json,%7B%22name%22%3A%22Yoga+Nidra+%C2%B7+Teacher+Script%22%2C%22short_name%22%3A%22Yoga+Nidra%22%2C%22description%22%3A%22A+guided+60-minute+Yoga+Nidra+class+script+for+teachers%22%2C%22start_url%22%3A%22.%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230a3d35%22%2C%22theme_color%22%3A%22%230a3d35%22%7D">
+
+<!-- Open Graph (for sharing previews) -->
+<meta property="og:title" content="Yoga Nidra · Teacher Script">
+<meta property="og:description" content="A guided 60-minute Yoga Nidra class script. Phase-by-phase prompts, spoken script, and teaching tips — designed for phone use in a dim room.">
+<meta property="og:type" content="website">
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal-dark: #0a3d35;
+    --teal-mid: #1a6b5c;
+    --teal-soft: #2e8b7a;
+    --teal-pale: #c8ede6;
+    --teal-faint: #edf7f5;
+    --gold: #c9a84c;
+    --gold-pale: #f5edda;
+    --ink: #1a1a1a;
+    --ink-mid: #3d3d3d;
+    --ink-soft: #6b6b6b;
+    --surface: #ffffff;
+    --surface-off: #f7faf9;
+    --border: rgba(46,139,122,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--teal-dark);
+    color: var(--surface);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ─────────────────────────────────────── */
+  .top-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--teal-dark);
+    border-bottom: 1px solid rgba(200,237,230,0.15);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .top-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--teal-pale);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+  }
+
+  .phase-counter {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+
+  /* ── PROGRESS ────────────────────────────────── */
+  .progress-bar {
+    height: 2px;
+    background: rgba(200,237,230,0.12);
+    position: relative;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--gold);
+    transition: width 0.4s ease;
+  }
+
+  /* ── PHASE NAV STRIP ─────────────────────────── */
+  .phase-nav {
+    display: flex;
+    overflow-x: auto;
+    background: rgba(0,0,0,0.2);
+    border-bottom: 1px solid rgba(200,237,230,0.1);
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .phase-nav::-webkit-scrollbar { display: none; }
+
+  .phase-pill {
+    flex-shrink: 0;
+    padding: 8px 14px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: rgba(200,237,230,0.5);
+    cursor: pointer;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .phase-pill.active {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+  }
+
+  /* ── MAIN CONTENT ────────────────────────────── */
+  .content {
+    padding: 0 0 100px;
+  }
+
+  .phase-block {
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+  .phase-block.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── PHASE HEADER ────────────────────────────── */
+  .phase-header {
+    padding: 24px 20px 16px;
+    border-bottom: 1px solid rgba(200,237,230,0.12);
+  }
+
+  .phase-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .phase-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--teal-pale);
+    margin-bottom: 8px;
+  }
+
+  .phase-time {
+    font-size: 12px;
+    color: rgba(200,237,230,0.5);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .phase-time::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+
+  /* ── BODY NOTE ───────────────────────────────── */
+  .note {
+    padding: 12px 20px;
+    font-size: 13px;
+    color: rgba(200,237,230,0.6);
+    line-height: 1.65;
+    font-style: italic;
+  }
+
+  /* ── SCRIPT LINE ─────────────────────────────── */
+  .script-wrap {
+    padding: 4px 20px;
+  }
+
+  .script-line {
+    background: rgba(200,237,230,0.05);
+    border-left: 2px solid var(--teal-soft);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 16px;
+    margin: 8px 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    line-height: 1.7;
+    color: #e8f5f2;
+    font-style: italic;
+  }
+
+  /* ── SUB HEADING ─────────────────────────────── */
+  .sub-heading {
+    padding: 16px 20px 4px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--teal-soft);
+  }
+
+  /* ── TIPS SECTION ────────────────────────────── */
+  .tips-toggle {
+    margin: 16px 20px 0;
+    padding: 10px 14px;
+    background: transparent;
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 8px;
+    color: var(--gold);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    width: calc(100% - 40px);
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .tips-toggle:active { background: rgba(201,168,76,0.08); }
+  .tips-toggle .chevron { transition: transform 0.25s; font-style: normal; font-size: 14px; }
+  .tips-toggle.open .chevron { transform: rotate(180deg); }
+
+  .tips-body {
+    display: none;
+    padding: 12px 20px 4px;
+  }
+  .tips-body.open { display: block; }
+
+  .tip-item {
+    display: flex;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(200,237,230,0.06);
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(200,237,230,0.65);
+  }
+  .tip-item:last-child { border-bottom: none; }
+  .tip-dot {
+    flex-shrink: 0;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--gold);
+    margin-top: 8px;
+  }
+
+  /* ── SILENCE BLOCK ───────────────────────────── */
+  .silence {
+    margin: 12px 20px;
+    padding: 12px 14px;
+    background: rgba(201,168,76,0.06);
+    border-radius: 8px;
+    font-size: 12px;
+    color: rgba(201,168,76,0.7);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-align: center;
+  }
+
+  /* ── BOTTOM NAV ──────────────────────────────── */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--teal-dark);
+    border-top: 1px solid rgba(200,237,230,0.12);
+    padding: 12px 20px;
+    display: flex;
+    gap: 12px;
+    z-index: 100;
+  }
+
+  .btn {
+    flex: 1;
+    padding: 13px;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.1s;
+    letter-spacing: 0.02em;
+    border: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn:active { transform: scale(0.97); opacity: 0.85; }
+
+  .btn-prev {
+    background: rgba(200,237,230,0.08);
+    color: var(--teal-pale);
+  }
+  .btn-next {
+    background: var(--teal-soft);
+    color: white;
+  }
+  .btn:disabled {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  /* ── DIVIDER ─────────────────────────────────── */
+  .divider {
+    height: 1px;
+    background: rgba(200,237,230,0.08);
+    margin: 20px 20px 8px;
+  }
+
+  /* ── APPENDIX ────────────────────────────────── */
+  .appendix-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    border-bottom: 1px solid rgba(200,237,230,0.06);
+    gap: 12px;
+  }
+  .appendix-phase { font-size: 10px; letter-spacing: 0.08em; color: var(--gold); font-weight: 500; text-transform: uppercase; flex-shrink: 0; width: 60px; }
+  .appendix-name { font-size: 13px; color: var(--teal-pale); flex: 1; }
+  .appendix-time { font-size: 12px; color: rgba(200,237,230,0.4); flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="top-title" id="topTitle">Yoga Nidra · Teacher Script</div>
+  <div class="phase-counter" id="phaseCounter">1 / 11</div>
+</div>
+
+<div class="progress-bar">
+  <div class="progress-fill" id="progressFill" style="width:9%"></div>
+</div>
+
+<div class="phase-nav" id="phaseNav">
+  <div class="phase-pill active" onclick="goTo(0)">Setup</div>
+  <div class="phase-pill" onclick="goTo(1)">Arrival</div>
+  <div class="phase-pill" onclick="goTo(2)">Breath</div>
+  <div class="phase-pill" onclick="goTo(3)">Sankalpa</div>
+  <div class="phase-pill" onclick="goTo(4)">Rotation</div>
+  <div class="phase-pill" onclick="goTo(5)">Counting</div>
+  <div class="phase-pill" onclick="goTo(6)">Opposites</div>
+  <div class="phase-pill" onclick="goTo(7)">Visuals</div>
+  <div class="phase-pill" onclick="goTo(8)">Sankalpa II</div>
+  <div class="phase-pill" onclick="goTo(9)">Return</div>
+  <div class="phase-pill" onclick="goTo(10)">Closing</div>
+</div>
+
+<div class="content">
+
+  <!-- ── PHASE 0: ROOM SETUP ─────────────────── -->
+  <div class="phase-block active" id="phase-0">
+    <div class="phase-header">
+      <div class="phase-label">Phase 0</div>
+      <div class="phase-name">Room Preparation</div>
+      <div class="phase-time">Before class begins</div>
+    </div>
+    <div class="note">Prepare before students arrive. The environment is part of the practice.</div>
+    <div class="divider"></div>
+    <button class="tips-toggle" onclick="toggleTips(this)">Teacher Tips <span class="chevron">▾</span></button>
+    <div class="tips-body">
+      <div class="tip-item"><div class="tip-dot"></div><div>Dim lights to 20–30% brightness — enough to walk safely, not enough to stimulate the nervous system.</div></div>
+      <div class="tip-item"><div class="tip-dot"></div><div>Set room temperature warmer than usual (22–24°C / 72–76°F) — students cool down quickly when still.</div></div>
+      <div class="tip-item"><div class="tip-dot"></div><div>Play soft ambient or drone music at very low volume, or complete silence. Avoid music with lyrics.</div></div>
+      <div class="tip-item"><div class="tip-dot"></div><div>Place blankets, bolsters, and eye pillows near each mat. Have spares available.</div></div>
+      <div class="tip-item"><div class="tip-dot"></div><div>A Tibetan singing bowl or chime is excellent for transitions — have it nearby.</div></div>
+    </div>
+  </div>
+
+  <!-- ── PHASE 1: ARRIVAL ───────────────────── -->
+  <div class="phase-block" id="phase-1">
+    <div class="phase-header">
+      <div class="phase-label">Phase 1</div>
+      <div class="phase-name">Setup & Arrival</div>
+      <div class="phase-time">5 min · 0:00 – 5:00</div>
+    </div>
+    <div class="note">Welcome students as they settle. Speak gently from the moment they enter.</div>
+    <div class="script-wrap">
+      <div class="script-line">Welcome. Please come to lie down on your mat, on your back. Allow your legs to fall slightly apart, arms a little distance from your body, palms facing up toward the ceiling.</div>
+      <div class="script-line">If you would like a bolster under your knees, an eye pillow, or a blanket over your body, please make yourself completely comfortable now. This is your space for the next hour.</div>
+      <div class="script-line">Take a moment to make any final adjustments. Find the stillness that feels right for your body today.</div>
+    </div>
+    <div class="silence">— Allow 60–90 seconds of silence —</div>
+    <div class="script-wrap">
+      <div class="script-line">From this point forward, I invite you to remain as still as possible. Falling asleep is perfectly okay — the practice still works at a deep level.</div>
+    </div>
+    <button class="tips-toggle" onclick="toggleTips(this)">Teacher Tips <span class="chevron">▾</span></button>
+    <div class="tips-body">
+      <div class="tip-item"><div class="tip-dot"></div><div>Keep your voice low and warm from the very first word — set the tone immediately.</div></div>
+      <div class="tip-item"><div class="tip-dot"></div><div>Avoid rushing. Give the room time to settle from the energy of the day.</div></div>
+      <div class="tip-item"><div class="tip-dot"></div><div>If students arrive late, acknowledge them with a quiet gesture, not words.</div></div>
+      <div class="tip-item"><div class="tip-dot"></div><div>Remind students to silence phones before beginning.</div></div>
+    </div>
+  </div>
+
+  <!-- ── PHASE 2: BREATH ────────────────────── -->
+  <div class="phase-block" id="phase-2">
+    <div class="phase-header">
+      <div class="phase-label">Phase 2</div>
+      <div class="phase-name">Breath & Grounding</div>
+      <div class="phase-time">5 min · 5:00 – 10:00</div>
+    </div>
+    <div class="note">Move awareness inward, away from external thoughts. Anchor in the body.</div>
+    <div class="script-wrap">
+      <div class="script-line">Close your eyes gently. Take a deep breath in through your nose… and let it go completely through your mouth with a quiet sigh. Do this once more — breathe in fully… and release.</div>
+      <div class="script-line">Now allow your breath to return to its natural, unforced rhythm. You are not controlling anything. Simply noticing the breath as it moves in and out of the body.</div>
+      <div class="script-line">Feel the weight of your body sinking downward. Your heels… your calves… the backs of your thighs… your lower back… your shoulder blades… the back of your head. All of it surrendering to the floor beneath you.</div>
+      <div class="script-line">The floor is supporting you completely. You don't need to hold anything up. You can let go.</div>
+    </div>
+    <button class="tips-toggle" onclick="toggleTips(this)">Teacher Tips <span class="chevron">▾</span></button>
+    <div class="tips-body">
+      <div class="tip-item"><div class="tip-dot"></div><div>Slow your own breath as you guide — students unconsciously mirror the teacher's rhythm.</div></div>
+      <div class="tip-item"><div class="tip-dot"></div><div>Use long, natural pauses (3–5 seconds) between sentences. Let words land.</div></div>
+      <div class="tip-item"><div class="tip-dot"></div><div>Say "the body is relaxing" not "relax the body" — describe what is already happening.</div></div>
+    </div>
+  </div>
+
+  <!-- ── PHASE 3: SANKALPA ──────────────────── -->
+  <div class="phase-block" id="phase-3">
+    <div class="phase-header">
+      <div class="phase-label">Phase 3</div>
+      <div class="phase-name">Sankalpa</div>
+      <div class="phase-time">3 min · 10:00 – 13:00</div>
+    </div>
+    <div class="note">A Sankalpa is a short, positive intention stated in the present tense. Let it arise naturally — not intellectually.</div>
+    <div class="script-wrap">
+      <div class="script-line">As you rest in this still and quiet space, I invite you to bring to mind your Sankalpa — your heartfelt intention or resolve. Something deeply true to you. Perhaps "I am at peace." Or "I am whole." Or simply "I am enough."</div>
+      <div class="script-line">Don't search too hard. Allow your Sankalpa to arise naturally. If nothing comes, simply rest with the feeling of openness.</div>
+      <div class="script-line">Once you have your Sankalpa, plant it gently into your mind — three times — with full feeling and conviction. As if it is already true.</div>
+    </div>
+    <div class="silence">— 30–40 seconds of silence —</div>
+    <div class="script-wrap">
+      <div class="script-line">The seed is planted. Now we move deeper.</div>
+    </div>
+    <button class="tips-toggle" onclick="toggleTips(this)">Teacher Tips <span class="chevron">▾</span></button>
+    <div class="tips-body">
+      <div class="tip-item"><div class="tip-dot"></div><div>Offer examples but encourage students to find their own.</div></div>
+      <div class="tip-item"><div class="tip-dot"></div><div>Keep this phase gentle and non-prescriptive.</div></div>
+      <div class="tip-item"><div class="tip-dot"></div><div>The Sankalpa is planted twice — the second time (Phase 8) lands even deeper.</div></div>
+    </div>
+  </div>
+
+  <!-- ── PHASE 4: ROTATION ──────────────────── -->
+  <div class="phase-block" id="phase-4">
+    <div class="phase-header">
+      <div class="phase-label">Phase 4</div>
+      <div class="phase-name">Rotation of Consciousness</div>
+      <div class="phase-time">15 min · 13:00 – 28:00</div>
+    </div>
+    <div class="note">Name each body part at a steady rhythm — one part every 2–3 seconds. Students mentally touch each part without moving.</div>
+    <div class="script-wrap">
+      <div class="script-line">Now we will move awareness through the body. Simply follow along with your mind. There is nothing to do — just notice, just be aware.</div>
+    </div>
+    <div class="sub-heading">Right side of the body</div>
+    <div class="script-wrap">
+      <div class="script-line">Right hand thumb… index finger… middle finger… ring finger… little finger… palm of the right hand… back of the right hand… right wrist… right forearm… right elbow… right upper arm… right shoulder… right armpit… right side of the chest… right side of the waist… right hip… right thigh… right kneecap… right calf… right ankle… right heel… right sole… right big toe… second toe… third toe… fourth toe… fifth toe.</div>
+    </div>
+    <div class="sub-heading">Left side of the body</div>
+    <div class="script-wrap">
+      <div class="script-line">Left hand thumb… index finger… middle finger… ring finger… little finger… palm of the left hand… back of the left hand… left wrist… left forearm… left elbow… left upper arm… left shoulder… left armpit… left side of the chest… left side of the waist… left hip… left thigh… left kneecap… left calf… left ankle… left heel… left sole… left big toe… second toe… third toe… fourth toe… fifth toe.</div>
+    </div>
+    <div class="sub-heading">Back of the body</div>
+    <div class="script-wrap">
+      <div class="script-line">Right heel… left heel… right calf… left calf… right knee… left knee… right thigh… left thigh… right buttock… left buttock… lower back… middle back… upper back… right shoulder blade… left shoulder blade… back of the neck… back of the head.</div>
+    </div>
+    <div class="sub-heading">Front of the body</div>
+    <div class="script-wrap">
+      <div class="script-line">Top of the head… forehead… right temple… left temple… right eyebrow… left eyebrow… the space between the eyebrows… right eye… left eye… right ear… left ear… right cheek… left cheek… the nose… upper lip… lower lip… the chin… the throat… right collarbone… left collarbone… right chest… left chest… centre of the chest… navel… abdomen…</div>
+    </div>
+    <div class="silence">— Pause —</div>
+    <div class="script-wrap">
+      <div class="script-line">The whole body… the whole body… the whole body resting.</div>
+    </div>
+    <button class="tips-toggle" onclick="toggleTips(this)">Teacher Tips <span class="chevron">▾</span></button>
+    <div class="tips-body">
+      <div class="tip-item"><div class="tip-dot"></div><div>Maintain a steady, metronome-like pace throughout — consistency helps the mind disengage.</div></div>
+      <div class="tip-item"><div class="tip-dot"></div><div>Don't pause long between body parts — brief, rhythmic naming is most effective.</div></div>
+      <div class="tip-item"><div class="tip-dot"></div><div>If a student moves or adjusts, don't draw attention to it.</div></div>
+      <div class="tip-item"><div class="tip-dot"></div><div>A second pass through the rotation, if time allows, deepens the effect significantly.</div></div>
+    </div>
+  </div>
+
+  <!-- ── PHASE 5: BREATH COUNTING ───────────── -->
+  <div class="phase-block" id="phase-5">
+    <div class="phase-header">
+      <div class="phase-label">Phase 5</div>
+      <div class="phase-name">Breath Counting</div>
+      <div class="phase-time">7 min · 28:00 – 35:00</div>
+    </div>
+    <div class="note">Count backwards from 27 — this occupies the conscious mind just enough to prevent chatter while allowing deeper states to emerge.</div>
+    <div class="script-wrap">
+      <div class="script-line">Now bring your awareness to your breath. Simply observe it. The rise and fall. The natural rhythm of the body breathing itself.</div>
+      <div class="script-line">We are going to count backwards from 27, one count per complete breath. Breathe in… breathe out… 27. Breathe in… breathe out… 26. Continue at your own pace.</div>
+    </div>
+    <div class="silence">— 4–5 minutes of near silence —</div>
+    <div class="script-wrap">
+      <div class="script-line">If your mind wanders, gently return. Come back to the counting. If you lose your place, simply return to 27. There is no failure here — only returning.</div>
+    </div>
+    <div class="silence">— After counting period —</div>
+    <div class="script-wrap">
+      <div class="script-line">Release the counting. Return simply to watching the breath — rising and falling — like waves on a still ocean.</div>
+    </div>
+    <button class="tips-toggle" onclick="toggleTips(this)">Teacher Tips <span class="chevron">▾</span></button>
+    <div class="tips-body">
+      <div class="tip-item"><div class="tip-dot"></div><div>Reduce your speaking significantly in this phase — the silence is the practice.</div></div>
+      <div class="tip-item"><div class="tip-dot"></div><div>Speak only to anchor students if you sense energy rising in the room.</div></div>
+      <div class="tip-item"><div class="tip-dot"></div><div>If students fall asleep here, that's perfectly fine and common.</div></div>
+    </div>
+  </div>
+
+  <!-- ── PHASE 6: OPPOSITES ─────────────────── -->
+  <div class="phase-block" id="phase-6">
+    <div class="phase-header">
+      <div class="phase-label">Phase 6</div>
+      <div class="phase-name">Pairs of Opposites</div>
+      <div class="phase-time">8 min · 35:00 – 43:00</div>
+    </div>
+    <div class="note">Rapidly evoke opposite sensations. 20–30 seconds each. Move swiftly — no narrative. Trains the mind to witness without attachment.</div>
+    <div class="script-wrap">
+      <div class="script-line">We are going to move through pairs of feelings and sensations. Don't analyse them. Simply allow each experience to arise and pass away. You are the witness — not the experience itself.</div>
+      <div class="script-line">Feel heaviness… your body is heavy, sinking, dense. Every part of you is very heavy.</div>
+      <div class="script-line">Now feel lightness… your body is weightless, floating, airy. Light as feathers.</div>
+      <div class="script-line">Feel warmth spreading through your body… pleasant warmth, like sunshine.</div>
+      <div class="script-line">Now feel cool… refreshing coolness washing over you.</div>
+      <div class="script-line">Feel discomfort… a slight tension, a tightening somewhere in the body.</div>
+      <div class="script-line">Now feel ease and pleasure… softness, comfort, relief.</div>
+      <div class="script-line">Feel sadness… allow sadness to be present, without pushing it away.</div>
+      <div class="script-line">Now feel joy… a lightness in the heart, a smile behind the eyes.</div>
+      <div class="script-line">Feel fear… a contraction, a quickening.</div>
+      <div class="script-line">Now feel courage… an expansion, an openness in the chest.</div>
+      <div class="script-line">Whatever you have felt — you are not any of it. You are the one who witnesses it. Resting always in that quiet centre.</div>
+    </div>
+    <button class="tips-toggle" onclick="toggleTips(this)">Teacher Tips <span class="chevron">▾</span></button>
+    <div class="tips-body">
+      <div class="tip-item"><div class="tip-dot"></div><div>Keep transitions between opposites swift — rapid alternation is what breaks habitual mental patterns.</div></div>
+      <div class="tip-item"><div class="tip-dot"></div><div>Your voice should stay even across both pleasant and unpleasant feelings — model neutrality.</div></div>
+      <div class="tip-item"><div class="tip-dot"></div><div>This phase can surface emotions for some students. Hold space with calm, grounded presence.</div></div>
+    </div>
+  </div>
+
+  <!-- ── PHASE 7: VISUALISATION ─────────────── -->
+  <div class="phase-block" id="phase-7">
+    <div class="phase-header">
+      <div class="phase-label">Phase 7</div>
+      <div class="phase-name">Rapid Visualisation</div>
+      <div class="phase-time">7 min · 43:00 – 50:00</div>
+    </div>
+    <div class="note">One image every 5–10 seconds. Students visualise without analysis. Move swiftly — variety matters more than content.</div>
+    <div class="script-wrap">
+      <div class="script-line">Now allow images to arise in your mind's eye. Simply see each one — clearly and briefly — then let it dissolve. There is nothing to understand, nothing to hold onto.</div>
+      <div class="script-line">A candle flame… a calm, still ocean… a snow-capped mountain… a lotus flower opening at dawn… a crow on a bare winter branch… a full moon reflected in a lake… a child running in a field… a great fire burning… a golden key… a red wooden door… a desert at sunrise… a spinning wheel… a deep forest path… an open hand… a flock of birds lifting from a tree… a crescent moon… an ancient stone wall… a waterfall… a single candle… an empty sky.</div>
+    </div>
+    <div class="silence">— 30–60 seconds of silence —</div>
+    <div class="script-wrap">
+      <div class="script-line">The images dissolve. Only the still, silent witness remains. Rest here.</div>
+    </div>
+    <button class="tips-toggle" onclick="toggleTips(this)">Teacher Tips <span class="chevron">▾</span></button>
+    <div class="tips-body">
+      <div class="tip-item"><div class="tip-dot"></div><div>Mix nature scenes, objects, emotions, symbols — variety prevents the mind from latching on.</div></div>
+      <div class="tip-item"><div class="tip-dot"></div><div>Pause 2–3 seconds between each image to allow students time to form the picture.</div></div>
+      <div class="tip-item"><div class="tip-dot"></div><div>Avoid images with strong personal or cultural associations that may alienate students.</div></div>
+    </div>
+  </div>
+
+  <!-- ── PHASE 8: SANKALPA II ───────────────── -->
+  <div class="phase-block" id="phase-8">
+    <div class="phase-header">
+      <div class="phase-label">Phase 8</div>
+      <div class="phase-name">Sankalpa · Second Planting</div>
+      <div class="phase-time">2 min · 50:00 – 52:00</div>
+    </div>
+    <div class="note">At this depth of relaxation, the subconscious mind is highly receptive. The intention lands now like a seed in fertile soil.</div>
+    <div class="script-wrap">
+      <div class="script-line">Return now to your Sankalpa — your heartfelt intention. Recall it with clarity and feeling.</div>
+      <div class="script-line">From this deep and still place, plant your Sankalpa into the soil of your being. Repeat it three times — with full faith, as if it is already completely true.</div>
+    </div>
+    <div class="silence">— 40–50 seconds of silence —</div>
+    <div class="script-wrap">
+      <div class="script-line">It is done. The seed is planted in fertile ground.</div>
+    </div>
+    <button class="tips-toggle" onclick="toggleTips(this)">Teacher Tips <span class="chevron">▾</span></button>
+    <div class="tips-body">
+      <div class="tip-item"><div class="tip-dot"></div><div>Your voice should be at its softest and slowest here — students are in their most receptive state.</div></div>
+      <div class="tip-item"><div class="tip-dot"></div><div>Do not offer example Sankalpas — trust that each student knows their own.</div></div>
+      <div class="tip-item"><div class="tip-dot"></div><div>The silence in this phase is as important as the words.</div></div>
+    </div>
+  </div>
+
+  <!-- ── PHASE 9: RETURN ────────────────────── -->
+  <div class="phase-block" id="phase-9">
+    <div class="phase-header">
+      <div class="phase-label">Phase 9</div>
+      <div class="phase-name">Externalisation</div>
+      <div class="phase-time">5 min · 52:00 – 57:00</div>
+    </div>
+    <div class="note">Bring students back slowly and in layers. Moving too quickly can cause disorientation. Inner body first, then senses, then movement.</div>
+    <div class="script-wrap">
+      <div class="script-line">Begin to become aware of your breath once more. Simply the breath, rising and falling.</div>
+      <div class="script-line">Become aware of your physical body — the weight of it, the temperature of your skin, the contact of your body against the mat.</div>
+      <div class="script-line">Become aware of the room around you — the temperature of the air… any sounds you notice… the quality of the light behind your closed eyes.</div>
+      <div class="script-line">Very slowly, begin to invite gentle movement. Wiggle your fingers… and your toes. Take a slightly deeper breath. Allow a stretch to move through your body if it wishes to.</div>
+      <div class="script-line">Slowly, when you are ready, roll onto your right side. Rest here for a moment — there is no hurry.</div>
+    </div>
+    <div class="silence">— Allow 45–60 seconds on the side —</div>
+    <div class="script-wrap">
+      <div class="script-line">When you feel ready, use your hands to gently press yourself up to a comfortable seated position. Take your time. Let your head come up last.</div>
+    </div>
+    <button class="tips-toggle" onclick="toggleTips(this)">Teacher Tips <span class="chevron">▾</span></button>
+    <div class="tips-body">
+      <div class="tip-item"><div class="tip-dot"></div><div>Never rush this phase — moving too quickly shocks the nervous system out of deep rest.</div></div>
+      <div class="tip-item"><div class="tip-dot"></div><div>Ring a singing bowl or soft chime once before beginning the externalisation.</div></div>
+      <div class="tip-item"><div class="tip-dot"></div><div>Some students may feel emotional as they emerge — hold space with calm, grounded presence.</div></div>
+      <div class="tip-item"><div class="tip-dot"></div><div>Keep your voice gentle but slightly more present — you are calling students back from a deep place.</div></div>
+    </div>
+  </div>
+
+  <!-- ── PHASE 10: CLOSING ──────────────────── -->
+  <div class="phase-block" id="phase-10">
+    <div class="phase-header">
+      <div class="phase-label">Phase 10</div>
+      <div class="phase-name">Closing & Integration</div>
+      <div class="phase-time">3 min · 57:00 – 60:00</div>
+    </div>
+    <div class="note">Keep closing words brief and grounding. Allow students to sit in silence before the class formally ends.</div>
+    <div class="script-wrap">
+      <div class="script-line">As you sit here, take a moment to notice how you feel. You may feel still, spacious, perhaps a little soft and inward. This is the natural state of a rested nervous system. You have done nothing — and yet something has shifted.</div>
+      <div class="script-line">Bring your palms together at your heart. Bow your head gently.</div>
+      <div class="script-line">Thank you for your practice. May you carry this stillness with you into the rest of your day.</div>
+    </div>
+    <div class="silence">— Ring bowl · Hold silence —</div>
+    <div class="script-wrap">
+      <div class="script-line">Namaste.</div>
+    </div>
+    <button class="tips-toggle" onclick="toggleTips(this)">Teacher Tips <span class="chevron">▾</span></button>
+    <div class="tips-body">
+      <div class="tip-item"><div class="tip-dot"></div><div>Hold at least one minute of silence after students come to seated — let them integrate.</div></div>
+      <div class="tip-item"><div class="tip-dot"></div><div>Avoid immediately launching into announcements — give the space a moment to settle.</div></div>
+      <div class="tip-item"><div class="tip-dot"></div><div>Keep the lights low until students begin to pack up.</div></div>
+      <div class="tip-item"><div class="tip-dot"></div><div>If students want to sit in silence longer, allow it.</div></div>
+    </div>
+    <div class="divider"></div>
+    <div style="padding: 16px 20px 8px;">
+      <div style="font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); font-weight: 500; margin-bottom: 12px;">Quick Reference</div>
+      <div class="appendix-row"><div class="appendix-phase">Ph 0</div><div class="appendix-name">Room Prep</div><div class="appendix-time">Before class</div></div>
+      <div class="appendix-row"><div class="appendix-phase">Ph 1</div><div class="appendix-name">Arrival</div><div class="appendix-time">0:00–5:00</div></div>
+      <div class="appendix-row"><div class="appendix-phase">Ph 2</div><div class="appendix-name">Breath & Grounding</div><div class="appendix-time">5:00–10:00</div></div>
+      <div class="appendix-row"><div class="appendix-phase">Ph 3</div><div class="appendix-name">Sankalpa I</div><div class="appendix-time">10:00–13:00</div></div>
+      <div class="appendix-row"><div class="appendix-phase">Ph 4</div><div class="appendix-name">Rotation</div><div class="appendix-time">13:00–28:00</div></div>
+      <div class="appendix-row"><div class="appendix-phase">Ph 5</div><div class="appendix-name">Breath Counting</div><div class="appendix-time">28:00–35:00</div></div>
+      <div class="appendix-row"><div class="appendix-phase">Ph 6</div><div class="appendix-name">Opposites</div><div class="appendix-time">35:00–43:00</div></div>
+      <div class="appendix-row"><div class="appendix-phase">Ph 7</div><div class="appendix-name">Visualisation</div><div class="appendix-time">43:00–50:00</div></div>
+      <div class="appendix-row"><div class="appendix-phase">Ph 8</div><div class="appendix-name">Sankalpa II</div><div class="appendix-time">50:00–52:00</div></div>
+      <div class="appendix-row"><div class="appendix-phase">Ph 9</div><div class="appendix-name">Externalisation</div><div class="appendix-time">52:00–57:00</div></div>
+      <div class="appendix-row"><div class="appendix-phase">Ph 10</div><div class="appendix-name">Closing</div><div class="appendix-time">57:00–60:00</div></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── BOTTOM NAV ──────────────────────────────── -->
+<div class="bottom-nav">
+  <button class="btn btn-prev" id="prevBtn" onclick="navigate(-1)" disabled>← Prev</button>
+  <button class="btn btn-next" id="nextBtn" onclick="navigate(1)">Next →</button>
+</div>
+
+<script>
+  let current = 0;
+  const total = 11;
+
+  const phases = [
+    'Room Setup', 'Setup & Arrival', 'Breath & Grounding', 'Sankalpa',
+    'Rotation', 'Breath Counting', 'Opposites', 'Visualisation',
+    'Sankalpa II', 'Externalisation', 'Closing'
+  ];
+
+  function goTo(n) {
+    document.getElementById('phase-' + current).classList.remove('active');
+    document.querySelectorAll('.phase-pill')[current].classList.remove('active');
+    current = n;
+    document.getElementById('phase-' + current).classList.add('active');
+    const pills = document.querySelectorAll('.phase-pill');
+    pills[current].classList.add('active');
+    pills[current].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    document.getElementById('topTitle').textContent = phases[current];
+    document.getElementById('phaseCounter').textContent = (current + 1) + ' / ' + total;
+    document.getElementById('progressFill').style.width = ((current + 1) / total * 100) + '%';
+    document.getElementById('prevBtn').disabled = current === 0;
+    document.getElementById('nextBtn').disabled = current === total - 1;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function navigate(dir) { goTo(current + dir); }
+
+  function toggleTips(btn) {
+    btn.classList.toggle('open');
+    btn.nextElementSibling.classList.toggle('open');
+  }
+</script>
+</body>
+</html>
