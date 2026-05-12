@@ -98,6 +98,37 @@
     transition: width 0.4s ease;
   }
 
+
+
+  /* ── JOURNEY TABS ─────────────────────────── */
+  .journey-tabs {
+    display: flex;
+    gap: 8px;
+    padding: 10px 12px;
+    background: rgba(0,0,0,0.18);
+    border-bottom: 1px solid rgba(200,237,230,0.1);
+  }
+
+  .journey-tab {
+    flex: 1;
+    padding: 10px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(200,237,230,0.14);
+    background: rgba(200,237,230,0.05);
+    color: rgba(200,237,230,0.68);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+  }
+
+  .journey-tab.active {
+    background: var(--gold);
+    color: var(--teal-dark);
+    border-color: var(--gold);
+  }
+
   /* ── PHASE NAV STRIP ─────────────────────────── */
   .phase-nav {
     display: flex;
@@ -357,19 +388,12 @@
   <div class="progress-fill" id="progressFill" style="width:9%"></div>
 </div>
 
-<div class="phase-nav" id="phaseNav">
-  <div class="phase-pill active" onclick="goTo(0)">Setup</div>
-  <div class="phase-pill" onclick="goTo(1)">Arrival</div>
-  <div class="phase-pill" onclick="goTo(2)">Breath</div>
-  <div class="phase-pill" onclick="goTo(3)">Sankalpa</div>
-  <div class="phase-pill" onclick="goTo(4)">Rotation</div>
-  <div class="phase-pill" onclick="goTo(5)">Counting</div>
-  <div class="phase-pill" onclick="goTo(6)">Opposites</div>
-  <div class="phase-pill" onclick="goTo(7)">Visuals</div>
-  <div class="phase-pill" onclick="goTo(8)">Sankalpa II</div>
-  <div class="phase-pill" onclick="goTo(9)">Return</div>
-  <div class="phase-pill" onclick="goTo(10)">Closing</div>
+<div class="journey-tabs">
+  <button class="journey-tab active" onclick="switchJourney('adult')" id="adultTab">60 Min · Full Nidra</button>
+  <button class="journey-tab" onclick="switchJourney('youth')" id="youthTab">15 Min · Youth Nidra</button>
 </div>
+
+<div class="phase-nav" id="phaseNav"></div>
 
 <div class="content">
 
@@ -680,6 +704,147 @@
     </div>
   </div>
 
+
+  <!-- ── YOUTH 15-MIN JOURNEY: PHASE 0 ───────── -->
+  <div class="phase-block youth-phase" id="youth-phase-0">
+    <div class="phase-header">
+      <div class="phase-label">Youth Journey · Phase 0</div>
+      <div class="phase-name">Youth-Safe Setup</div>
+      <div class="phase-time">Before session begins</div>
+    </div>
+    <div class="note">Designed for middle school and high school students. Keep language simple, choice-based, trauma-informed, and non-mystical.</div>
+    <div class="script-wrap">
+      <div class="script-line">Before we start, you are in charge of your own comfort. You can lie down, sit against a wall, or sit in a chair. Your eyes can be closed, softly open, or looking down.</div>
+      <div class="script-line">This is not a test. You do not have to relax perfectly. You are just practicing noticing your body and giving your nervous system a short reset.</div>
+    </div>
+    <button class="tips-toggle" onclick="toggleTips(this)">Teacher Tips <span class="chevron">▾</span></button>
+    <div class="tips-body">
+      <div class="tip-item"><div class="tip-dot"></div><div>Give students options: lying down, seated, eyes open, or eyes closed. Choice helps students feel safe.</div></div>
+      <div class="tip-item"><div class="tip-dot"></div><div>Avoid saying students must be still. Say they may adjust quietly if they need to.</div></div>
+      <div class="tip-item"><div class="tip-dot"></div><div>For school settings, skip phrases that may feel too spiritual. Use reset, calm, focus, body, breath, and attention.</div></div>
+    </div>
+  </div>
+
+  <!-- ── YOUTH 15-MIN JOURNEY: PHASE 1 ───────── -->
+  <div class="phase-block youth-phase" id="youth-phase-1">
+    <div class="phase-header">
+      <div class="phase-label">Youth Journey · Phase 1</div>
+      <div class="phase-name">Arrival & Choice</div>
+      <div class="phase-time">2 min · 0:00 – 2:00</div>
+    </div>
+    <div class="note">Start with control and consent. Students are more likely to engage when they do not feel trapped.</div>
+    <div class="script-wrap">
+      <div class="script-line">Find a position that feels okay for your body. You can lie down, sit, or lean against something. Let your hands rest somewhere comfortable.</div>
+      <div class="script-line">Take one slow breath in through your nose if that feels comfortable… and let it out through your mouth. Again, breathe in… and let it go.</div>
+      <div class="script-line">Notice one thing touching the floor or chair. Your feet, your legs, your back, or your hands. Let that contact remind you: I am here. I am supported.</div>
+    </div>
+    <div class="silence">— 20 seconds of silence —</div>
+    <button class="tips-toggle" onclick="toggleTips(this)">Teacher Tips <span class="chevron">▾</span></button>
+    <div class="tips-body">
+      <div class="tip-item"><div class="tip-dot"></div><div>Normalize fidgeting. For some students, tiny movement helps them regulate.</div></div>
+      <div class="tip-item"><div class="tip-dot"></div><div>Keep your voice calm but not sleepy. Teens often respond better to grounded than overly soft.</div></div>
+    </div>
+  </div>
+
+  <!-- ── YOUTH 15-MIN JOURNEY: PHASE 2 ───────── -->
+  <div class="phase-block youth-phase" id="youth-phase-2">
+    <div class="phase-header">
+      <div class="phase-label">Youth Journey · Phase 2</div>
+      <div class="phase-name">Body Scan Reset</div>
+      <div class="phase-time">4 min · 2:00 – 6:00</div>
+    </div>
+    <div class="note">Short, steady body scan. Use simple body areas instead of long anatomical lists.</div>
+    <div class="script-wrap">
+      <div class="script-line">Bring your attention to your feet. Notice your toes, the bottoms of your feet, your heels. No need to move them. Just notice.</div>
+      <div class="script-line">Notice your legs. Your calves, knees, thighs, and hips. Let the legs be heavy for a moment.</div>
+      <div class="script-line">Notice your stomach and chest. If your breath feels tight, that is okay. You do not have to change it. Just notice the body breathing.</div>
+      <div class="script-line">Notice your hands. Your fingers, palms, and wrists. Let your hands soften if they want to.</div>
+      <div class="script-line">Notice your shoulders, neck, jaw, and face. Let your forehead smooth out just a little. Let your jaw unclench if it feels safe.</div>
+      <div class="script-line">Now sense your whole body at once. Feet, legs, stomach, chest, hands, shoulders, face. Your whole body resting here.</div>
+    </div>
+    <button class="tips-toggle" onclick="toggleTips(this)">Teacher Tips <span class="chevron">▾</span></button>
+    <div class="tips-body">
+      <div class="tip-item"><div class="tip-dot"></div><div>If students are giggly, keep going without scolding. Calm leadership usually settles the room.</div></div>
+      <div class="tip-item"><div class="tip-dot"></div><div>Use “notice” more than “relax.” Some students cannot relax on command.</div></div>
+    </div>
+  </div>
+
+  <!-- ── YOUTH 15-MIN JOURNEY: PHASE 3 ───────── -->
+  <div class="phase-block youth-phase" id="youth-phase-3">
+    <div class="phase-header">
+      <div class="phase-label">Youth Journey · Phase 3</div>
+      <div class="phase-name">Breath Anchor</div>
+      <div class="phase-time">3 min · 6:00 – 9:00</div>
+    </div>
+    <div class="note">Use breath as an anchor, not a demand. Some youth feel anxious when breath is over-controlled.</div>
+    <div class="script-wrap">
+      <div class="script-line">Now choose one anchor. You can notice your breath, the feeling of your feet, or the feeling of your hands.</div>
+      <div class="script-line">If you choose breath, silently count: breathing in, one… breathing out, one. Breathing in, two… breathing out, two. Count up to five, then start again.</div>
+      <div class="script-line">If your mind wanders, that is normal. The practice is not staying focused forever. The practice is coming back.</div>
+    </div>
+    <div class="silence">— 60–90 seconds of quiet practice —</div>
+    <div class="script-wrap">
+      <div class="script-line">Come back to your anchor one more time. Breath, feet, or hands. Simple. Steady. Here.</div>
+    </div>
+    <button class="tips-toggle" onclick="toggleTips(this)">Teacher Tips <span class="chevron">▾</span></button>
+    <div class="tips-body">
+      <div class="tip-item"><div class="tip-dot"></div><div>Offer non-breath anchors for students with anxiety, trauma, asthma, or discomfort with breath focus.</div></div>
+      <div class="tip-item"><div class="tip-dot"></div><div>For middle schoolers, make the silence shorter. For high schoolers, you can stretch it slightly longer.</div></div>
+    </div>
+  </div>
+
+  <!-- ── YOUTH 15-MIN JOURNEY: PHASE 4 ───────── -->
+  <div class="phase-block youth-phase" id="youth-phase-4">
+    <div class="phase-header">
+      <div class="phase-label">Youth Journey · Phase 4</div>
+      <div class="phase-name">Calm Place Visual</div>
+      <div class="phase-time">3 min · 9:00 – 12:00</div>
+    </div>
+    <div class="note">A neutral visualization that avoids forcing imagination. Students may use memory, imagination, or simply a color.</div>
+    <div class="script-wrap">
+      <div class="script-line">Imagine a place where your body can feel a little more calm. It can be real or made up. A beach, a room, a field, a car ride, a quiet corner, or even just a color.</div>
+      <div class="script-line">Notice what you might see there. Notice what sounds might be there. Notice the temperature. Notice what lets this place feel a little safer or calmer.</div>
+      <div class="script-line">In this place, silently say to yourself: I can pause. I can breathe. I can choose my next step.</div>
+    </div>
+    <div class="silence">— 30 seconds of silence —</div>
+    <button class="tips-toggle" onclick="toggleTips(this)">Teacher Tips <span class="chevron">▾</span></button>
+    <div class="tips-body">
+      <div class="tip-item"><div class="tip-dot"></div><div>Do not assume home is safe for every student. Let them choose any place, real or imagined.</div></div>
+      <div class="tip-item"><div class="tip-dot"></div><div>The phrase “a little more calm” is realistic and less pressuring than “completely safe.”</div></div>
+    </div>
+  </div>
+
+  <!-- ── YOUTH 15-MIN JOURNEY: PHASE 5 ───────── -->
+  <div class="phase-block youth-phase" id="youth-phase-5">
+    <div class="phase-header">
+      <div class="phase-label">Youth Journey · Phase 5</div>
+      <div class="phase-name">Return & Ready</div>
+      <div class="phase-time">3 min · 12:00 – 15:00</div>
+    </div>
+    <div class="note">Return them clearly so they can transition back to class, group, or the school day.</div>
+    <div class="script-wrap">
+      <div class="script-line">Begin to notice the room again. Notice the sounds around you. Notice the floor, chair, or mat supporting you.</div>
+      <div class="script-line">Take a deeper breath in… and let it out. Wiggle your fingers. Wiggle your toes. Gently move your shoulders or neck if that feels good.</div>
+      <div class="script-line">Before you open your eyes fully, choose one word for how you want to return: calm, focused, brave, kind, steady, or ready.</div>
+      <div class="script-line">When you are ready, open your eyes or lift your gaze. Come back slowly. Take this calmer version of yourself into the next part of your day.</div>
+    </div>
+    <button class="tips-toggle" onclick="toggleTips(this)">Teacher Tips <span class="chevron">▾</span></button>
+    <div class="tips-body">
+      <div class="tip-item"><div class="tip-dot"></div><div>Give students 10–20 seconds before asking them to speak or stand.</div></div>
+      <div class="tip-item"><div class="tip-dot"></div><div>Optional closure: students can show one finger for “more calm,” two for “same,” three for “more alert.” Keep it private and low-pressure.</div></div>
+    </div>
+    <div class="divider"></div>
+    <div style="padding: 16px 20px 8px;">
+      <div style="font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); font-weight: 500; margin-bottom: 12px;">Youth Quick Reference</div>
+      <div class="appendix-row"><div class="appendix-phase">Y0</div><div class="appendix-name">Youth-Safe Setup</div><div class="appendix-time">Before session</div></div>
+      <div class="appendix-row"><div class="appendix-phase">Y1</div><div class="appendix-name">Arrival & Choice</div><div class="appendix-time">0:00–2:00</div></div>
+      <div class="appendix-row"><div class="appendix-phase">Y2</div><div class="appendix-name">Body Scan Reset</div><div class="appendix-time">2:00–6:00</div></div>
+      <div class="appendix-row"><div class="appendix-phase">Y3</div><div class="appendix-name">Breath Anchor</div><div class="appendix-time">6:00–9:00</div></div>
+      <div class="appendix-row"><div class="appendix-phase">Y4</div><div class="appendix-name">Calm Place Visual</div><div class="appendix-time">9:00–12:00</div></div>
+      <div class="appendix-row"><div class="appendix-phase">Y5</div><div class="appendix-name">Return & Ready</div><div class="appendix-time">12:00–15:00</div></div>
+    </div>
+  </div>
+
 </div>
 
 <!-- ── BOTTOM NAV ──────────────────────────────── -->
@@ -690,28 +855,70 @@
 
 <script>
   let current = 0;
-  const total = 11;
+  let currentJourney = 'adult';
 
-  const phases = [
-    'Room Setup', 'Setup & Arrival', 'Breath & Grounding', 'Sankalpa',
-    'Rotation', 'Breath Counting', 'Opposites', 'Visualisation',
-    'Sankalpa II', 'Externalisation', 'Closing'
-  ];
+  const journeys = {
+    adult: {
+      title: 'Yoga Nidra · Teacher Script',
+      prefix: 'phase',
+      labels: ['Setup', 'Arrival', 'Breath', 'Sankalpa', 'Rotation', 'Counting', 'Opposites', 'Visuals', 'Sankalpa II', 'Return', 'Closing'],
+      phases: [
+        'Room Setup', 'Setup & Arrival', 'Breath & Grounding', 'Sankalpa',
+        'Rotation', 'Breath Counting', 'Opposites', 'Visualisation',
+        'Sankalpa II', 'Externalisation', 'Closing'
+      ]
+    },
+    youth: {
+      title: '15-Min Youth Nidra · School Reset',
+      prefix: 'youth-phase',
+      labels: ['Setup', 'Arrival', 'Scan', 'Anchor', 'Visual', 'Return'],
+      phases: [
+        'Youth-Safe Setup', 'Arrival & Choice', 'Body Scan Reset',
+        'Breath Anchor', 'Calm Place Visual', 'Return & Ready'
+      ]
+    }
+  };
 
-  function goTo(n) {
-    document.getElementById('phase-' + current).classList.remove('active');
-    document.querySelectorAll('.phase-pill')[current].classList.remove('active');
+  function renderPhaseNav() {
+    const nav = document.getElementById('phaseNav');
+    nav.innerHTML = journeys[currentJourney].labels.map((label, index) =>
+      `<div class="phase-pill ${index === current ? 'active' : ''}" onclick="goTo(${index})">${label}</div>`
+    ).join('');
+  }
+
+  function hideAllPhases() {
+    document.querySelectorAll('.phase-block').forEach(block => block.classList.remove('active'));
+  }
+
+  function switchJourney(journey) {
+    currentJourney = journey;
+    current = 0;
+    document.getElementById('adultTab').classList.toggle('active', journey === 'adult');
+    document.getElementById('youthTab').classList.toggle('active', journey === 'youth');
+    renderPhaseNav();
+    goTo(0, false);
+  }
+
+  function goTo(n, scroll = true) {
+    const journey = journeys[currentJourney];
+    const total = journey.phases.length;
+    if (n < 0 || n >= total) return;
+
+    hideAllPhases();
     current = n;
-    document.getElementById('phase-' + current).classList.add('active');
+    document.getElementById(journey.prefix + '-' + current).classList.add('active');
+
     const pills = document.querySelectorAll('.phase-pill');
+    pills.forEach(pill => pill.classList.remove('active'));
     pills[current].classList.add('active');
     pills[current].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-    document.getElementById('topTitle').textContent = phases[current];
+
+    document.getElementById('topTitle').textContent = journey.phases[current];
     document.getElementById('phaseCounter').textContent = (current + 1) + ' / ' + total;
     document.getElementById('progressFill').style.width = ((current + 1) / total * 100) + '%';
     document.getElementById('prevBtn').disabled = current === 0;
     document.getElementById('nextBtn').disabled = current === total - 1;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (scroll) window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   function navigate(dir) { goTo(current + dir); }
@@ -720,6 +927,9 @@
     btn.classList.toggle('open');
     btn.nextElementSibling.classList.toggle('open');
   }
+
+  renderPhaseNav();
+  goTo(0, false);
 </script>
 </body>
 </html>
